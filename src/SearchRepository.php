@@ -5,7 +5,6 @@ namespace Waxwink\SearchRepository;
 
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 abstract class SearchRepository
@@ -25,7 +24,7 @@ abstract class SearchRepository
     protected $searchable_attributes = [];
 
     /**
-     * @var Builder
+     * @var mixed
      */
     protected $query;
 
@@ -33,7 +32,7 @@ abstract class SearchRepository
      * Filtering through records with given filters
      *
      * @param array $filters
-     * @return Builder
+     * @return mixed $query
      */
     public function filter(array $filters)
     {
@@ -44,12 +43,18 @@ abstract class SearchRepository
             // if the value is string or number
             if (is_string($value) || is_numeric($value)){
 
-                if ($date =Carbon::make($value)){
-                    $start = $date->setHour(0)->setMinute(0)->setSecond(0)->toDateTimeString();
-                    $end = $date->setHour(23)->setMinute(59)->setSecond(59)->toDateTimeString();
-                    $this->query = $this->query->where($key, ">=", $start)->where($key, "<", $end);
-                    continue;
+                try{
+                    if ($date =Carbon::make($value)){
+                        $start = $date->setHour(0)->setMinute(0)->setSecond(0)->toDateTimeString();
+                        $end = $date->setHour(23)->setMinute(59)->setSecond(59)->toDateTimeString();
+                        $this->query = $this->query->where($key, ">=", $start)->where($key, "<", $end);
+                        continue;
+                    }
+                }catch (\Exception $exception){
+                    //
                 }
+
+
 
                 $this->query = $this->query->where($key, $value);
                 continue;
@@ -87,7 +92,7 @@ abstract class SearchRepository
      * Searching through filtered data
      *
      * @param $value
-     * @return Builder
+     * @return mixed $query
      */
     public function search($value)
     {
@@ -105,11 +110,19 @@ abstract class SearchRepository
     /**
      * Returns the query object
      *
-     * @return Builder
+     * @return mixed $query
      */
-    public function getQuery(): Builder
+    public function getQuery()
     {
         return $this->query;
+    }
+
+    /**
+     * @param $query
+     */
+    public function setQuery($query): void
+    {
+        $this->query = $query;
     }
 
 }
