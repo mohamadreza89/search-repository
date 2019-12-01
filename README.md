@@ -33,6 +33,7 @@ After creating the search repository class it can be used in your controller as 
 
 ```php
 use Waxwink\SearchRepository\Concerns\SearchTrait;
+use Illuminate\Http\Request;
 
 class UserController {
     use SearchTrait;
@@ -40,7 +41,8 @@ class UserController {
     public function index(Request $request, UserSearchRepository $userSearchRepository)
     {
         $users = $this->filterAndSearch($request, $userSearchRepository)->paginate();
-        ...
+        
+        // ...
     }
 }
 

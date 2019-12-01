@@ -2,7 +2,7 @@
     "name": "waxwink/search-repository",
     "description": "An abstraction repository class for laravel which handles the filtering and searching through a table",
     "require": {
-        "laravel/framework": "^6.5"
+        "laravel/framework": ">=5.7"
     },
     "license": "MIT",
     "authors": [
