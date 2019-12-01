@@ -4,7 +4,7 @@
 
 create a specific repository for your model (e.g User) and extend the SearchRepository. In your class you should define your filterable and searchable attributes and you are ready to go.
 
-```$xslt
+```php
 
 use Waxwink\SearchRepository\SearchRepository;
 
@@ -31,7 +31,17 @@ class UserSearchRepository extends SearchRepository
 
 After creating the search repository class it can be used in your controller as follows while using the `SearchTrait`:
 
-```$xslt
-$this->filterAndSearch($request, $userSearchRepository)->paginate();
+```php
+use Waxwink\SearchRepository\Concerns\SearchTrait;
 
-``` 
+class UserController {
+    use SearchTrait;
+    
+    public function index(Request $request, UserSearchRepository $userSearchRepository)
+    {
+        $users = $this->filterAndSearch($request, $userSearchRepository)->paginate();
+        ...
+    }
+}
+
+```
