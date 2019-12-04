@@ -60,7 +60,9 @@ The request body should contain the fields that are going to be filtered like th
 
 {
     "gender":["m"],
-    "created_at":"2019-01-01"
+    "created_at":"2019-01-01",
+    "birth_date":["1999-01-01", ">"],
+    "name":["joe", "like"]
 }
 ```
 
