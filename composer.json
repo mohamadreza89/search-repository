@@ -10,6 +10,11 @@
             "name": "Mohamadreza",
             "email": "darkknight_89@yahoo.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Waxwink\\SearchRepository\\": "src/"
+        }
+    }
 }
 
