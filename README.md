@@ -26,6 +26,11 @@ class UserSearchRepository extends SearchRepository
         'email',
         'created_at'
     ];
+
+    public function __construct()
+    {
+        $this->query = App\User::query();
+    }
 }
 ```
 
@@ -46,4 +51,22 @@ class UserController {
     }
 }
 
+```
+
+## Request Body
+The request body should contain the fields that are going to be filtered like the following:
+
+```json
+
+{
+    "gender":["m"],
+    "created_at":"2019-01-01"
+}
+```
+
+## Search Param
+Search param should contain the searching key words like:
+
+```
+app/users?search=jack
 ```
